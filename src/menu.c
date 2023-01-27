@@ -1063,6 +1063,7 @@ void Menu_Tick(void)
 		}
 		case MenuPage_Options:
 		{
+			static const int issystempal = (GetVideoMode() == MODE_NTSC ? 0 : 1);
 			static const char *gamemode_strs[] = {"NORMAL", "SWAP", "TWO PLAYER"};
 			static const struct
 			{
@@ -1088,7 +1089,7 @@ void Menu_Tick(void)
 				} spec;
 			} menu_options[] = {
 				{OptType_Enum,    "GAMEMODE", &stage.mode, {.spec_enum = {COUNT_OF(gamemode_strs), gamemode_strs}}},
-				{OptType_Boolean, "PAL REFRESH RATE", &stage.prefs.palmode, {.spec_boolean = {0}}},
+				{OptType_Boolean, "PAL REFRESH RATE", &stage.prefs.palmode, {.spec_boolean = {issystempal}}},
 				{OptType_Boolean, "GHOST TAP", &stage.prefs.ghost, {.spec_boolean = {0}}},
 				{OptType_Boolean, "MISS SOUNDS", &stage.prefs.sfxmiss, {.spec_boolean = {0}}},
 				{OptType_Boolean, "DOWNSCROLL", &stage.prefs.downscroll, {.spec_boolean = {0}}},
