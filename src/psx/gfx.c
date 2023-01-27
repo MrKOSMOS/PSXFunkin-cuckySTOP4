@@ -24,14 +24,28 @@ static u8 *nextpri;          //Next primitive pointer
 //Gfx functions
 void Gfx_Init(void)
 {
+	//Reset GPU
+	ResetGraph(0);
+		
 	int width = stage.prefs.widescreen ? 512 : 320;
-
-	//Initialize display environment
-	SetDefDispEnv(&stage.disp[0], 0, 0, width, 240);
-	SetDefDispEnv(&stage.disp[1], 0, 240, width, 240);				
-	//Initialize draw environment
-	SetDefDrawEnv(&stage.draw[0], 0, 240, width, 240);
-	SetDefDrawEnv(&stage.draw[1], 0, 0, width, 240);
+	
+	
+	if( !stage.prefs.palmode ) {
+		//Initialize display environment
+		SetDefDispEnv(&stage.disp[0], 0, 0, width, 240);
+		SetDefDispEnv(&stage.disp[1], 0, 240, width, 240);				
+		//Initialize draw environment
+		SetDefDrawEnv(&stage.draw[0], 0, 240, width, 240);
+		SetDefDrawEnv(&stage.draw[1], 0, 0, width, 240);
+	} else {
+		//Initialize display environment
+		SetDefDispEnv(&stage.disp[0], 0, 0, width, 256);
+		SetDefDispEnv(&stage.disp[1], 0, 256, width, 256);				
+		//Initialize draw environment
+		SetDefDrawEnv(&stage.draw[0], 0, 256, width, 256);
+		SetDefDrawEnv(&stage.draw[1], 0, 0, width, 256);
+	}
+	
 
 	//Set draw background
 	stage.draw[0].isbg = 1;
@@ -62,7 +76,7 @@ u8 Gfx_GetDB()
 
 void Gfx_ScreenSetup(void) {
 	screen.SCREEN_WIDTH   = stage.prefs.widescreen ? 512 : 320;
-	screen.SCREEN_HEIGHT  = 240;
+	screen.SCREEN_HEIGHT  = stage.prefs.palmode ? 256 ; 240;
 	screen.SCREEN_WIDTH2  = (screen.SCREEN_WIDTH >> 1);
 	screen.SCREEN_HEIGHT2 = (screen.SCREEN_HEIGHT >> 1);
 
