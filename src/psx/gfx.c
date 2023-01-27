@@ -23,12 +23,8 @@ static u8 *nextpri;          //Next primitive pointer
 
 //Gfx functions
 void Gfx_Init(void)
-{
-	//Reset GPU
-	ResetGraph(0);
-		
+{	
 	int width = stage.prefs.widescreen ? 512 : 320;
-	
 	
 	if( !stage.prefs.palmode ) {
 		//Initialize display environment
