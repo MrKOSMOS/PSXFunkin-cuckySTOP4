@@ -1063,7 +1063,6 @@ void Menu_Tick(void)
 		}
 		case MenuPage_Options:
 		{
-			static const int issystempal = (GetVideoMode() == MODE_NTSC ? 0 : 1);
 			static const char *gamemode_strs[] = {"NORMAL", "SWAP", "TWO PLAYER"};
 			static const struct
 			{
@@ -1089,7 +1088,7 @@ void Menu_Tick(void)
 				} spec;
 			} menu_options[] = {
 				{OptType_Enum,    "GAMEMODE", &stage.mode, {.spec_enum = {COUNT_OF(gamemode_strs), gamemode_strs}}},
-				{OptType_Boolean, "PAL REFRESH RATE", &stage.prefs.palmode, {.spec_boolean = {issystempal}}},
+				{OptType_Boolean, "PAL REFRESH RATE", &stage.prefs.palmode, {.spec_boolean = {0}}},
 				{OptType_Boolean, "GHOST TAP", &stage.prefs.ghost, {.spec_boolean = {0}}},
 				{OptType_Boolean, "MISS SOUNDS", &stage.prefs.sfxmiss, {.spec_boolean = {0}}},
 				{OptType_Boolean, "DOWNSCROLL", &stage.prefs.downscroll, {.spec_boolean = {0}}},
@@ -1109,7 +1108,10 @@ void Menu_Tick(void)
 			RECT save_src = {0, 121, 55, 7};
 			RECT save_dst = {screen.SCREEN_WIDTH / 2 + 30 - (121 / 2), screen.SCREEN_HEIGHT - 30, 53 * 2, 7 * 2};
 			Gfx_DrawTex(&menu.tex_story, &save_src, &save_dst);
-
+			
+			//Auto region detection
+			*((boolean*)menu_options[1].value) = (GetVideoMode() == MODE_NTSC ? 0 : 1);
+			
 			//Draw page label
 			menu.font_bold.draw(&menu.font_bold,
 				"OPTIONS",
