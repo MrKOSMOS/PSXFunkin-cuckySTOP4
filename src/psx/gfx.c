@@ -26,21 +26,13 @@ void Gfx_Init(void)
 {	
 	int width = stage.prefs.widescreen ? 512 : 320;
 	
-	if( !stage.prefs.palmode ) {
-		//Initialize display environment
-		SetDefDispEnv(&stage.disp[0], 0, 0, width, 240);
-		SetDefDispEnv(&stage.disp[1], 0, 240, width, 240);				
-		//Initialize draw environment
-		SetDefDrawEnv(&stage.draw[0], 0, 240, width, 240);
-		SetDefDrawEnv(&stage.draw[1], 0, 0, width, 240);
-	} else {
-		//Initialize display environment
-		SetDefDispEnv(&stage.disp[0], 0, 0, width, 256);
-		SetDefDispEnv(&stage.disp[1], 0, 256, width, 256);				
-		//Initialize draw environment
-		SetDefDrawEnv(&stage.draw[0], 0, 256, width, 256);
-		SetDefDrawEnv(&stage.draw[1], 0, 0, width, 256);
-	}
+	
+	//Initialize display environment
+	SetDefDispEnv(&stage.disp[0], 0, 0, width, 240);
+	SetDefDispEnv(&stage.disp[1], 0, 240, width, 240);				
+	//Initialize draw environment
+	SetDefDrawEnv(&stage.draw[0], 0, 240, width, 240);
+	SetDefDrawEnv(&stage.draw[1], 0, 0, width, 240);
 	
 
 	//Set draw background
@@ -72,7 +64,7 @@ u8 Gfx_GetDB()
 
 void Gfx_ScreenSetup(void) {
 	screen.SCREEN_WIDTH   = stage.prefs.widescreen ? 512 : 320;
-	screen.SCREEN_HEIGHT  = stage.prefs.palmode ? 256 ; 240;
+	screen.SCREEN_HEIGHT  = 240;
 	screen.SCREEN_WIDTH2  = (screen.SCREEN_WIDTH >> 1);
 	screen.SCREEN_HEIGHT2 = (screen.SCREEN_HEIGHT >> 1);
 
@@ -85,8 +77,6 @@ void Gfx_ScreenSetup(void) {
 	screen.SCREEN_TALLOADD = (screen.SCREEN_TALLADD > 0 ? screen.SCREEN_TALLADD : 0);
 	screen.SCREEN_WIDEOADD2 = (screen.SCREEN_WIDEOADD >> 1);
 	screen.SCREEN_TALLOADD2 = (screen.SCREEN_TALLOADD >> 1);
-
-	SetVideoMode(stage.prefs.palmode ? MODE_PAL : MODE_NTSC);
 
 	Gfx_Init();
 
